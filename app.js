@@ -1,42 +1,10 @@
 // Fluid Perspectives - Interactive Fluid Mechanics Blog
 
-// Language Toggle
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
-    const langBtns = document.querySelectorAll('.lang-btn');
-    
-    langBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const lang = btn.dataset.lang;
-            toggleLanguage(lang);
-            
-            // Update active button
-            langBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        });
-    });
-    
     // Initialize Turbulence Canvas
     initTurbulenceCanvas();
 });
-
-function toggleLanguage(lang) {
-    // Toggle hidden class on all language elements
-    document.querySelectorAll('.en, [class*="-en"]').forEach(el => {
-        if (lang === 'cn') {
-            el.classList.add('hidden');
-        } else {
-            el.classList.remove('hidden');
-        }
-    });
-    
-    document.querySelectorAll('.cn, [class*="-cn"]').forEach(el => {
-        if (lang === 'cn') {
-            el.classList.remove('hidden');
-        } else {
-            el.classList.add('hidden');
-        }
-    });
-}
 
 // Turbulence Visualization
 function initTurbulenceCanvas() {
@@ -163,7 +131,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
-};
+});
 
 // Active nav link on scroll
 window.addEventListener('scroll', () => {
