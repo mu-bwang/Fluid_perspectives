@@ -26,10 +26,6 @@ body {
     background: #fafafa;
 }
 
-.hidden {
-    display: none !important;
-}
-
 /* Navigation */
 .navbar {
     position: fixed;
@@ -98,31 +94,6 @@ body {
 .nav-links a:hover::after,
 .nav-links a.active::after {
     width: 100%;
-}
-
-.language-toggle {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.lang-btn {
-    padding: 0.5rem 1rem;
-    border: 2px solid var(--accent-color);
-    background: transparent;
-    color: var(--accent-color);
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s;
-}
-
-.lang-btn.active {
-    background: var(--accent-color);
-    color: white;
-}
-
-.lang-btn:hover {
-    transform: scale(1.05);
 }
 
 /* Hero Section */
@@ -404,4 +375,137 @@ footer {
 }
 
 /* Responsive */
-@media (max-width:
+@media (max-width:/* About section styles - Appended to main CSS */
+
+/* About Section */
+.about {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 6rem 0;
+}
+
+.about-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.about-intro strong {
+    color: var(--primary-color);
+}
+
+.about-intro + p {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    color: #666;
+}
+
+.about-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.feature {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.feature h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.feature p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.about-cta {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+}
+
+.about-cta p {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.about-cta strong {
+    color: var(--highlight-color);
+}
+
+/* Latest News Section */
+.latest-news {
+    background: white;
+    padding: 6rem 0;
+}
+
+.news-placeholder {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    border: 2px dashed #ddd;
+}
+
+.news-placeholder p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.news-placeholder em {
+    color: var(--highlight-color);
+    font-style: normal;
+}
+
+.news-sources {
+    margin-top: 1rem;
+    font-size: 0.9rem !important;
+    color: #999 !important;
+}
+
+/* Footer */
+footer {
+    background: var(--primary-color);
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.footer-content p {
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+
+.footer-physics {
+    font-style: italic;
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
