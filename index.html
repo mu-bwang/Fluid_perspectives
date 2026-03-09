@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluid Perspectives | The Physics of Flow</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">〰</span>
+            <span class="brand-text">Fluid Perspectives</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#turbulence">Turbulence</a></li>
+            <li><a href="#phenomena">Phenomena</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+        <div class="language-toggle">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="cn">中文</button>
+        </div>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-en">The Hidden Order in Chaos</span>
+                <span class="title-cn hidden">混沌中的隐秘秩序</span>
+            </h1>
+            <p class="hero-subtitle">
+                <span class="subtitle-en">Exploring turbulence, vortices, and the beautiful physics of fluid flow around us.</span>
+                <span class="subtitle-cn hidden">探索湍流、涡旋，以及我们周围流体流动的美丽物理学。</span>
+            </p>
+            <div class="hero-wave">
+                <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path fill="var(--accent-color)" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <section class="featured" id="turbulence">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="en">Understanding Turbulence</span>
+                <span class="cn hidden">理解湍流</span>
+            </h2>
+            
+            <article class="featured-article">
+                <div class="article-visual">
+                    <div class="turbulence-demo">
+                        <canvas id="turbulenceCanvas"></canvas>
+                        <div class="visual-caption">
+                            <span class="en">Interactive: Click to create vortices</span>
+                            <span class="cn hidden">交互：点击创建涡旋</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-content">
+                    <span class="article-tag">Featured</span>
+                    <h3 class="article-title">
+                        <span class="en">Why Turbulence Matters</span>
+                        <span class="cn hidden">为什么湍流很重要</span>
+                    </h3>
+                    <p class="article-excerpt">
+                        <span class="en">
+                            From the cream swirling in your coffee to the massive atmospheric currents shaping our weather, 
+                            turbulence is everywhere. Yet it's one of the last great unsolved problems in classical physics. 
+                            Let's explore why this chaotic phenomenon follows surprisingly elegant mathematical patterns.
+                        </span>
+                        <span class="cn hidden">
+                            从你咖啡中旋转的奶泡到塑造我们天气的巨大大气环流，湍流无处不在。
+                            然而，它却是经典物理学中最后几个未解决的重大问题之一。
+                            让我们探索为什么这种混沌现象遵循着出奇优雅的数学模式。
+                        </span>
+                    </p>
+                    <div class="physics-insight">
+                        <h4>
+                            <span class="en">🧮 The Physics Behind It</span>
+                            <span class="cn hidden">🧮 背后的物理学</span>
+                        </h4>
+                        <p>
+                            <span class="en">
+                                The Navier-Stokes equations describe fluid motion, but at high Reynolds numbers 
+                                (Re = ρUL/μ), inertial forces dominate viscous forces, creating chaotic eddies 
+                                across multiple scales—from millimeters to kilometers.
+                            </span>
+                            <span class="cn hidden">
+                                纳维-斯托克斯方程描述了流体运动，但在高雷诺数下
+                                (Re = ρUL/μ)，惯性力主导粘性力，产生跨越多个尺度的混沌涡旋
+                                ——从毫米到公里。
+                            </span>
+                        </p>
+                    </div>
+                    <a href="#" class="read-more">
+                        <span class="en">Read full article →</span>
+                        <span class="cn hidden">阅读全文 →</span>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="phenomena-grid" id="phenomena">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="en">Everyday Fluid Phenomena</span>
+                <span class="cn hidden">日常流体现象</span>
+            </h2>
+            
+            <div class="grid">
+                <article class="phenomenon-card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="card-icon">🌊</div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">
+                            <span class="en">Oceanography</span>
+                            <span class="cn hidden">海洋学</span>
+                        </span>
+                        <h3>
+                            <span class="en">Kelvin-Helmholtz Instability</span>
+                            <span class="cn hidden">开尔文-亥姆霍兹不稳定性</span>
+                        </h3>
+                        <p>
+                            <span class="en">
+                                Those wave-like clouds you see? They're shear instabilities forming when two 
+                                fluid layers move at different velocities.
+                            </span>
+                            <span class="cn hidden">
+                                你看到的那些波浪状的云？它们是剪切不稳定性，当两个流体层以不同速度运动时形成。
+                            </span>
+                        </p>
+                        <div class="formula">
+                            <code>ω² = g(ρ₂−ρ₁)/(ρ₂+ρ₁) · k</code>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="phenomenon-card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="card-icon">☕</div>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">
+                            <span class="en">Daily Life</span>
+                            <span class="cn hidden">日常生活</span>
+                        </span>
+                        <h3>
+                            <span class="en">The Coffee Creamer Spiral</span>
+                            <span
