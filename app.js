@@ -1,219 +1,210 @@
-// Fluid Perspectives - Interactive Fluid Mechanics Blog
-
-// Initialize on page load
+// Fluid Perspectives - Working Turbulence Visualization
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Turbulence Canvas
-    initTurbulenceVisualization();
+    initTurbulence();
 });
 
-// Proper Turbulence Visualization
-function initTurbulenceVisualization() {
+function initTurbulence() {
     const canvas = document.getElementById('turbulenceCanvas');
-    if (!canvas) return;
+    if (!canvas) {
+        console.error('Canvas not found');
+        return;
+    }
     
     const ctx = canvas.getContext('2d');
-    const width = canvas.offsetWidth;
-    const height = canvas.offsetHeight;
-    canvas.width = width;
-    canvas.height = height;
     
-    // Flow field parameters
-    const cols = 50;
-    const rows = 30;
-    const scale = 0.01;
-    let time = 0;
+    // Set canvas size with explicit parent check
+    const container = canvas.parentElement;
+    canvas.width = container.clientWidth || 400;
+    canvas.height = 300;
     
-    // Particles representing tracer particles in turbulent flow
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Particles representing flow
     const particles = [];
-    const numParticles = 800;
+    const numParticles = 150;
     
-    // Initialize particles across the flow
     for (let i = 0; i < numParticles; i++) {
         particles.push({
             x: Math.random() * width,
             y: Math.random() * height,
             vx: 0,
             vy: 0,
-            age: Math.random() * 100,
-            lifespan: 100 + Math.random() * 100,
-            trail: []
+            trail: [],
+            color: `hsl(${200 + Math.random() * 60}, 70%, 60%)`
         });
     }
     
-    // Mouse interaction - creates disturbances like obstacles in flow
+    // Vortices array
+    let vortices = [];
+    
+    // Get flow field velocity at position
+    function getFlow(x, y) {
+        let vx = 0.5; // Mean flow
+        let vy = 0;
+        
+        // Add turbulent noise
+        const time = Date.now() / 1000;
+        vx += Math.sin(x * 0.01 + time) * Math.cos(y * 0.01 + time) * 0.5;
+        vy += Math.cos(x * 0.015 - time) * Math.sin(y * 0.015 + time) * 0.3;
+        
+        // Add vortex influences
+        vortices.forEach((v, idx) => {
+            const dx = x - v.x;
+            const dy = y - v.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            
+            if (dist < v.radius && dist > 1) {
+                // Tangential velocity around vortex
+                const strength = v.strength * (1 - dist / v.radius) / dist;
+                vx += -dy * strength;
+                vy += dx * strength;
+            }
+        });
+        
+        // Age and remove old vortices
+        vortices = vortices.filter(v => {
+            v.age++;
+            v.strength *= 0.995; // Decay
+            return v.age < 200 && v.strength > 0.01;
+        });
+        
+        return { vx, vy };
+    }
+    
+    // Click creates vortex
+    canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Create new vortex
+        vortices.push({
+            x: x,
+            y: y,
+            strength: 3,
+            radius: 100,
+            age: 0
+        });
+        
+        // Visual feedback
+        createClickRipple(x, y);
+    });
+    
+    // Track mouse for wake effect
     let mouseX = width / 2;
     let mouseY = height / 2;
-    let mouseActive = false;
-    
     canvas.addEventListener('mousemove', (e) => {
         const rect = canvas.getBoundingClientRect();
         mouseX = e.clientX - rect.left;
         mouseY = e.clientY - rect.top;
-        mouseActive = true;
     });
     
-    canvas.addEventListener('mouseleave', () => {
-        mouseActive = false;
-    });
-    
-    canvas.addEventListener('click', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const clickY = e.clientY - rect.top;
-        
-        // Create a strong vortex at click location
-        particles.forEach(p => {
-            const dx = p.x - clickX;
-            const dy = p.y - clickY;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 100 && dist > 0) {
-                // Vortex velocity field: tangential velocity proportional to 1/r
-                const strength = 50 / (dist + 10);
-                p.vx += (-dy / dist) * strength;
-                p.vy += (dx / dist) * strength;
-            }
-        });
-    });
-    
-    // Curl noise function for generating turbulence
-    function curlNoise(x, y, t) {
-        // Simplified 2D curl noise using multiple sine waves
-        const scale1 = 0.003;
-        const scale2 = 0.007;
-        const scale3 = 0.015;
-        
-        // Potential function
-        const p1 = Math.sin(x * scale1 + t * 0.5) * Math.cos(y * scale1 + t * 0.3);
-        const p2 = Math.sin(x * scale2 - t * 0.7) * Math.sin(y * scale2 + t * 0.4);
-        const p3 = Math.cos(x * scale3 + t * 0.2) * Math.sin(y * scale3 - t * 0.6);
-        
-        // Curl of potential (90 degree rotation of gradient)
-        // u = -d(p)/dy, v = d(p)/dx
-        const u = -(
-            scale1 * Math.sin(x * scale1 + t * 0.5) * (-Math.sin(y * scale1 + t * 0.3)) +
-            scale2 * Math.sin(x * scale2 - t * 0.7) * Math.cos(y * scale2 + t * 0.4) +
-            scale3 * Math.cos(x * scale3 + t * 0.2) * Math.cos(y * scale3 - t * 0.6)
-        ) * 10;
-        
-        const v = (
-            scale1 * Math.cos(x * scale1 + t * 0.5) * Math.cos(y * scale1 + t * 0.3) +
-            scale2 * Math.cos(x * scale2 - t * 0.7) * Math.sin(y * scale2 + t * 0.4) +
-            scale3 * (-Math.sin(x * scale3 + t * 0.2)) * Math.sin(y * scale3 - t * 0.6)
-        ) * 10;
-        
-        // Add large-scale mean flow (left to right)
-        const meanFlow = 0.5;
-        
-        return { 
-            u: u + meanFlow + (Math.random() - 0.5) * 0.3, // Add small random fluctuations
-            v: v + (Math.random() - 0.5) * 0.3 
-        };
+    // Click ripple effect
+    let ripples = [];
+    function createClickRipple(x, y) {
+        ripples.push({ x, y, radius: 0, maxRadius: 30, opacity: 1 });
     }
     
-    function drawStreamlines() {
-        // Draw faint streamlines to show flow structure
-        ctx.strokeStyle = 'rgba(100, 150, 255, 0.1)';
-        ctx.lineWidth = 1;
-        
-        for (let y = 0; y < height; y += 40) {
-            let x = 0;
-            let sx = x;
-            let sy = y;
-            
-            ctx.beginPath();
-            ctx.moveTo(sx, sy);
-            
-            for (let step = 0; step < 100 && x < width; step++) {
-                const noise = curlNoise(x, y, time);
-                x += noise.u * 2;
-                y += noise.v * 2;
-                ctx.lineTo(x, y);
-            }
-            ctx.stroke();
-        }
-    }
-    
-    function drawVorticityField() {
-        // Visualize vorticity with color grid
-        const gridSize = 20;
-        for (let x = 0; x < width; x += gridSize) {
-            for (let y = 0; y < height; y += gridSize) {
-                const noise = curlNoise(x, y, time);
-                const velocity = Math.sqrt(noise.u * noise.u + noise.v * noise.v);
-                const angle = Math.atan2(noise.v, noise.u);
-                
-                // Vorticity visualization: high velocity = brighter
-                const brightness = Math.min(1, velocity / 5);
-                const hue = (angle + Math.PI) / (2 * Math.PI) * 60 + 200; // Blue to purple range
-                
-                ctx.fillStyle = `hsla(${hue}, 70%, ${20 + brightness * 30}%, 0.3)`;
-                ctx.fillRect(x, y, gridSize - 2, gridSize - 2);
-            }
-        }
-    }
-    
-    function animate() {
-        // Dark background with trails
-        ctx.fillStyle = 'rgba(26, 26, 46, 0.15)';
+    function draw() {
+        // Fade effect
+        ctx.fillStyle = 'rgba(26, 26, 46, 0.08)';
         ctx.fillRect(0, 0, width, height);
         
-        // Draw vorticity field (subtle background)
-        drawVorticityField();
-        
-        // Draw streamlines
-        drawStreamlines();
+        // Draw vortices (visual representation)
+        vortices.forEach(v => {
+            const gradient = ctx.createRadialGradient(v.x, v.y, 0, v.x, v.y, v.radius);
+            gradient.addColorStop(0, `rgba(100, 150, 255, ${v.strength * 0.1})`);
+            gradient.addColorStop(1, 'rgba(100, 150, 255, 0)');
+            
+            ctx.beginPath();
+            ctx.arc(v.x, v.y, v.radius, 0, Math.PI * 2);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Draw spiral
+            ctx.beginPath();
+            for (let i = 0; i < 50; i++) {
+                const angle = i * 0.2 + v.age * 0.05;
+                const r = i * 2;
+                const sx = v.x + Math.cos(angle) * r;
+                const sy = v.y + Math.sin(angle) * r;
+                if (i === 0) ctx.moveTo(sx, sy);
+                else ctx.lineTo(sx, sy);
+            }
+            ctx.strokeStyle = `rgba(200, 220, 255, ${v.strength * 0.3})`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        });
         
         // Update and draw particles
-        particles.forEach((p, i) => {
-            // Get velocity from flow field
-            const flow = curlNoise(p.x, p.y, time);
-            const targetVx = flow.u * 2;
-            const targetVy = flow.v * 2;
+        particles.forEach(p => {
+            const flow = getFlow(p.x, p.y);
             
-            // Smooth particle velocity towards flow field
-            p.vx += (targetVx - p.vx) * 0.1;
-            p.vy += (targetVy - p.vy) * 0.1;
+            // Smooth velocity transition
+            p.vx += (flow.vx - p.vx) * 0.1;
+            p.vy += (flow.vy - p.vy) * 0.1;
             
-            // Mouse disturbance (creates wake/vortex)
-            if (mouseActive) {
-                const dx = p.x - mouseX;
-                const dy = p.y - mouseY;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                
-                if (dist < 80 && dist > 5) {
-                    // Wake effect behind mouse
-                    const strength = 2 * (1 - dist / 80);
-                    
-                    // Create vorticity - perpendicular push
-                    p.vx += (-dy / dist) * strength;
-                    p.vy += (dx / dist) * strength;
-                }
-            }
-            
-            // Add random turbulent fluctuations
-            if (Math.random() < 0.02) {
-                p.vx += (Math.random() - 0.5) * 1;
-                p.vy += (Math.random() - 0.5) * 1;
+            // Mouse wake effect
+            const dx = p.x - mouseX;
+            const dy = p.y - mouseY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 60 && dist > 1) {
+                const strength = 0.5 * (1 - dist / 60);
+                p.vx += (-dy / dist) * strength;
+                p.vy += (dx / dist) * strength;
             }
             
             // Update position
             p.x += p.vx;
             p.y += p.vy;
-            p.age++;
             
-            // Store trail
-            p.trail.push({x: p.x, y: p.y});
-            if (p.trail.length > 15) p.trail.shift();
+            // Wrap edges
+            if (p.x < 0) { p.x = width; p.trail = []; }
+            if (p.x > width) { p.x = 0; p.trail = []; }
+            if (p.y < 0) { p.y = height; p.trail = []; }
+            if (p.y > height) { p.y = 0; p.trail = []; }
             
-            // Reset particle if too old or out of bounds
-            if (p.age > p.lifespan || p.x < -50 || p.x > width + 50 || p.y < -50 || p.y > height + 50) {
-                p.x = Math.random() * width * 0.2; // Respawn on left side
-                p.y = Math.random() * height;
-                p.vx = 0;
-                p.vy = 0;
-                p.age = 0;
-                p.trail = [];
+            // Trail management
+            p.trail.push({ x: p.x, y: p.y });
+            if (p.trail.length > 20) p.trail.shift();
+            
+            // Draw trail
+            if (p.trail.length > 1) {
+                ctx.beginPath();
+                ctx.moveTo(p.trail[0].x, p.trail[0].y);
+                for (let i = 1; i < p.trail.length; i++) {
+                    ctx.lineTo(p.trail[i].x, p.trail[i].y);
+                }
+                ctx.strokeStyle = p.color + '40';
+                ctx.lineWidth = 1;
+                ctx.stroke();
             }
             
-            // Draw trail (showing path through turbulent flow)
-            if (p.trail.length >
+            // Draw particle
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.fill();
+        });
+        
+        // Draw ripples
+        ripples = ripples.filter(r => {
+            r.radius += 2;
+            r.opacity -= 0.05;
+            
+            ctx.beginPath();
+            ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${r.opacity})`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            return r.opacity > 0;
+        });
+        
+        requestAnimationFrame(draw);
+    }
+    
+    draw();
+    console.log('Turbulence visualization initialized');
+}
