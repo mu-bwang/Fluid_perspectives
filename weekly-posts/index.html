@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Posts Archive | Fluid Perspectives</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">〰</span>
+            <span class="brand-text">Fluid Perspectives</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../">Home</a></li>
+            <li><a href="../#phenomena">Phenomena</a></li>
+            <li><a href="../#about">About</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero" style="min-height: 40vh;">
+        <div class="hero-content">
+            <h1 class="hero-title" style="font-size: 2.5rem;">Weekly Archive</h1>
+            <p class="hero-subtitle">Every week, one real fluid phenomenon explained</p>
+        </div>
+    </header>
+
+    <section class="archive">
+        <div class="container">
+            <h2 class="section-title">Past Weekly Posts</h2>
+            
+            <div class="archive-grid">
+                <article class="archive-card">
+                    <div class="archive-date">March 10, 2025</div>
+                    <h3>The Kelvin-Helmholtz Clouds</h3>
+                    <p>Wave-like cloud formations from shear instabilities in the atmosphere.</p>
+                    <a href="2025-03-10.html" class="read-more">Read post →</a>
+                </article>
+            </div>
+            
+            <div class="archive-nav">
+                <a href="../" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Fluid Perspectives</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+<style>
+.archive {
+    padding: 4rem 0;
+}
+
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.archive-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+}
+
+.archive-card:hover {
+    transform: translateY(-5px);
+}
+
+.archive-date {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.archive-card h3 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a2e;
+    margin-bottom: 0.5rem;
+}
+
+.archive-card p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #667eea;
+    text-decoration: none;
+}
+</style>
