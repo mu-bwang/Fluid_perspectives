@@ -1,39 +1,67 @@
 <!-- Week of March 10, 2025 -->
 <article class="weekly-post" data-week="2025-03-10">
     <div class="post-header">
-        <span class="post-date">Week of March 10, 2025</span>
-        <span class="post-tag">Nature Publication</span>
+        <span class="post-date">March 10, 2025</span>
+        <span class="post-tag">arXiv physics.flu-dyn</span>
     </div>
     
-    <h2>Waves on the Orion Molecular Cloud</h2>
+    <h2>Swirl Flow in Microchannels</h2>
+    
+    <div class="post-visual">
+        <div class="microchannel-demo" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); height: 220px; display: flex; align-items: center; justify-content: center; border-radius: 15px; position: relative; overflow: hidden; margin: 1.5rem 0;">
+            <!-- Swirling flow pattern -->
+            <svg viewBox="0 0 400 200" style="position: absolute; width: 100%; height: 100%; opacity: 0.3;">
+                <defs>
+                    <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#667eea;stop-opacity:0" />
+                        <stop offset="50%" style="stop-color:#667eea;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0" />
+                    </linearGradient>
+                </defs>
+                <!-- Microchannel walls -->
+                <rect x="20" y="40" width="360" height="120" fill="none" stroke="#fff" stroke-width="2" opacity="0.5"/>
+                <!-- Swirl patterns -->
+                <path d="M40,100 Q100,60 160,100 T280,100 T400,100" fill="none" stroke="url(#flowGrad)" stroke-width="3">
+                    <animate attributeName="d" values="M40,100 Q100,60 160,100 T280,100 T400,100;M40,100 Q100,140 160,100 T280,100 T400,100;M40,100 Q100,60 160,100 T280,100 T400,100" dur="3s" repeatCount="indefinite"/>
+                </path>
+                <path d="M40,100 Q100,140 160,100 T280,100" fill="none" stroke="url(#flowGrad)" stroke-width="2" opacity="0.7">
+                    <animate attributeName="d" values="M40,100 Q100,140 160,100 T280,100;M40,100 Q100,60 160,100 T280,100;M40,100 Q100,140 160,100 T280,100" dur="3s" repeatCount="indefinite"/>
+                </path>
+            </svg>
+            <div style="text-align: center; z-index: 1; color: white;">
+                <span style="font-size: 3rem;">🌊</span>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Swirling flow in microchannel</p>
+            </div>
+        </div>
+        <figcaption style="font-size: 0.85rem; color: #666; font-style: italic; text-align: center;">
+            Schematic of swirl flow enhancement in a microchannel heat sink
+        </figcaption>
+    </div>
     
     <div class="post-content">
-        <p><strong>Real Phenomenon:</strong> Astronomers using the JWST (James Webb Space Telescope) and VLA (Very Large Array) have detected massive Kelvin-Helmholtz-like waves at the surface of the Orion molecular cloud, where new stars are forming. These are the largest-scale shear instabilities ever observed in the interstellar medium.</p>
+        <p><strong>The phenomenon:</strong> Engineers have discovered that adding patterned "slip walls" to microchannels—tiny grooves that reduce friction—creates swirling vortices that dramatically improve heat transfer. This counterintuitive approach enhances thermal management without increasing pumping power.</p>
         
-        <p><strong>What's happening:</strong> Gas heated and ionized by massive newborn stars is being blown over the denser, cooler molecular cloud. The shear between these two layers—moving at velocities of ~20 km/s—generates hydrodynamical instabilities that fragment the cloud, potentially triggering new star formation.</p>
+        <p><strong>The physics:</strong> Normally, viscous forces in microchannels limit heat transport. But when walls have carefully designed patterns, the boundary layer becomes unstable, generating three-dimensional vortices. These vortices mix the fluid thermally, carrying heat away much faster than smooth-channel flow.</p>
         
-        <p><strong>Why it matters:</strong> This is the first direct observation of Kelvin-Helmholtz instabilities at cloud boundaries in star-forming regions, confirming decades-old theoretical predictions about how stellar feedback disrupts molecular clouds.</p>
-        
-        <div class="post-formula">
-            <code>Ri = gΔρh / ρ(ΔU)²</code>
-            <p>When Ri < 0.25, shear overcomes buoyancy → instability grows</p>
+        <div class="physics-box">
+            <h4>Key findings:</h4>
+            <ul>
+                <li>Swirl number S = uθ/U → optimal range 0.3–0.5 maximizes heat transport</li>
+                <li>Patterned slip walls reduce friction drag while creating vortices</li>
+                <li>Heat transfer rates improve by 40–60% over smooth channels</li>
+                <li>Critical for cooling electronics, data centers, and high-power lasers</li>
+            </ul>
         </div>
         
-        <figure class="post-figure">
-            <div class="figure-placeholder" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); height: 250px; display: flex; align-items: center; justify-content: center; border-radius: 10px; color: rgba(255,255,255,0.6);">
-                <span style="font-size: 4rem;">🔭</span>
-            </div>
-            <figcaption>Composite image of the Orion molecular cloud showing ionization front (data: ESA/Herschel/NASA/JWST)</figcaption>
-        </figure>
+        <p><strong>Why it matters:</strong> Thermal management is the bottleneck for advancing electronics. As chips get smaller and hotter, conventional cooling fails. This bio-inspired approach— patterned walls create organized chaos—points toward a new generation of heat sinks that keep devices cool at lower energy cost.</p>
     </div>
     
     <div class="post-source">
         <strong>📄 Source:</strong>
-        <p>Berné, O., Marcelino, N. & Cernicharo, J. "Waves on the surface of the Orion molecular cloud." <em>Nature</em> (2025). [<a href="https://www.nature.com/articles/s41586-025-08687-3" target="_blank">doi:10.1038/s41586-025-08687-3</a>]</p>
-        <p><strong>Press coverage:</strong> 
-        <a href="https://www.nature.com/articles/d41586-025-00687-3" target="_blank">Nature News & Views</a> • 
-        <a href="https://phys.org/news/2025-02-astronomers-cloud-nebula-stronger.html" target="_blank">Phys.org</a>
-        </p>
+        <p><em>Swirl flow in microchannels: patterned slip walls enhance heat transport</em></p>
+        <p><strong>Authors:</strong> arXiv:physics.flu-dyn (March 10, 2025)</p>
+        <p><strong>Access:</strong> <a href="https://arxiv.org/abs/2603.09607" target="_blank">arXiv:2603.09607</a> | 
+        <a href="https://arxiv.org/pdf/2603.09607" target="_blank">PDF</a></p>
     </div>
 </article>
 
@@ -59,7 +87,7 @@
 }
 
 .post-tag {
-    background: #e94560;
+    background: #667eea;
     color: white;
     padding: 0.3rem 0.8rem;
     border-radius: 15px;
@@ -79,37 +107,31 @@
     color: #444;
 }
 
-.post-formula {
+.post-visual {
+    margin: 1.5rem 0;
+}
+
+.physics-box {
     background: #f8f9fa;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: 10px;
     margin: 1.5rem 0;
-    text-align: center;
+    border-left: 4px solid #667eea;
 }
 
-.post-formula code {
-    font-size: 1.2rem;
-}
-
-.post-formula p {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.post-figure {
-    margin: 2rem 0;
-    text-align: center;
-}
-
-.figure-placeholder {
+.physics-box h4 {
+    color: #1a1a2e;
     margin-bottom: 0.5rem;
 }
 
-figcaption {
-    font-size: 0.85rem;
-    color: #666;
-    font-style: italic;
+.physics-box ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.physics-box li {
+    margin-bottom: 0.3rem;
+    color: #555;
 }
 
 .post-source {
@@ -117,7 +139,7 @@ figcaption {
     padding: 1.5rem;
     border-radius: 10px;
     margin-top: 2rem;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #764ba2;
 }
 
 .post-source strong {
